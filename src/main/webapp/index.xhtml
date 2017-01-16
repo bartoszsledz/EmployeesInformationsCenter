@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="./szablon.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <div class="font">
+                    <center><h1>#{msg.pracownicy}</h1></center>
+                </div>
+                <div id="dodaj">
+                    <h:graphicImage name="add.png" library="images" alt="#{msg.dodaj}" />
+                    <h:commandLink action="#{pracownicy.DodajPracownika}" value="#{msg.dodaj_prac}" />
+                </div>
+                <h:dataTable footerClass="footer" rows="5" binding="#{pracownicy.tabela}" value="#{pracownicy.pracownicy}" var="prac">
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.imie}</f:facet>
+                        #{prac.imie}
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.nazwisko}</f:facet>
+                        #{prac.nazwisko}
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.zdjecie}</f:facet>
+                        <h:graphicImage library="zdjecia" name="#{prac.id}.jpg" rendered="#{prac.zdjecie}" width="35" height="35" />
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.departament}</f:facet>
+                        #{prac.departament.nazwa}
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.stanowisko}</f:facet>
+                        #{prac.stanowisko.nazwa}
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.edytuj}</f:facet>
+                        <h:commandLink action="#{pracownicy.Pobierz(prac.id)}">
+                            <h:graphicImage name="edit.png" library="images" alt="#{msg.edytuj}" />
+                        </h:commandLink>
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.usun}</f:facet>
+                        <h:commandLink actionListener="#{pracownicy.Usun(prac.id)}" onclick="return confirm('#{msg.usun_pyt}')">
+                            <h:graphicImage name="delete.png" library="images" alt="#{msg.usun}" />
+                        </h:commandLink>
+                    </h:column>
+                    <f:facet name="footer">
+                        <h:panelGroup>
+                            <h:commandLink value="#{msg.pierwsza}" action="#{pracownicy.pierwszaStrona}"
+                                           disabled="#{pracownicy.tabela.first == 0}" />
+                            <h:commandLink value="#{msg.poprzednia}" action="#{pracownicy.poprzedniaStrona}"
+                                           disabled="#{pracownicy.tabela.first == 0}" />
+                            <h:commandLink value="#{msg.nastepna}" action="#{pracownicy.nastepnaStrona}"
+                                           disabled="#{pracownicy.tabela.first + pracownicy.tabela.rows
+                                                       >= pracownicy.tabela.rowCount}" />
+                            <h:commandLink value="#{msg.ostatnia}" action="#{pracownicy.ostatniaStrona}"
+                                           disabled="#{pracownicy.tabela.first + pracownicy.tabela.rows
+                                                       >= pracownicy.tabela.rowCount}" />
+                        </h:panelGroup>
+                    </f:facet>
+                </h:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="./szablon.xhtml">
+        <ui:define name="title">- #{msg.departamenty}</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <div class="font">
+                    <center><h1>#{msg.departamenty}</h1></center>
+                </div>
+                <div id="dodaj">
+                    <h:graphicImage name="add.png" library="images" alt="#{msg.dodaj}" />
+                    <h:commandLink action="dodajDepartament" value="#{msg.dodaj_dep}" />
+                </div>
+                <h:dataTable value="#{departamenty.departamenty}" style="width:500px;" var="dep">
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.nazwa}</f:facet>
+                        #{dep.nazwa}
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.edytuj}</f:facet>
+                        <h:commandLink action="#{departamenty.Pobierz(dep.id)}">
+                            <h:graphicImage name="edit.png" library="images" alt="#{msg.edytuj}" />
+                        </h:commandLink>
+                    </h:column>
+                    <h:column headerClass="tytul">
+                        <f:facet name="header">#{msg.usun}</f:facet>
+                        <h:commandLink actionListener="#{departamenty.Usun(dep.id)}" onclick="return confirm('#{msg.usun_pyt}')">
+                            <h:graphicImage name="delete.png" library="images" alt="#{msg.usun}" />
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="./szablon.xhtml">
+        <ui:define name="title">- #{msg.edytowanie_prac}</ui:define>
+        <ui:define name="content">
+            <h:form id="form" enctype="multipart/form-data">
+                <div class="font">
+                    <center><h1>#{msg.edytowanie_prac}</h1></center>
+                </div>
+                <h:panelGrid columns="3">#{msg.imie}:
+                    <h:inputText id="imie" value="#{pracownicy.pracownik.imie}" required="true"/>
+                    <h:message for="imie" styleClass="blad" />#{msg.nazwisko}:
+                    <h:inputText id="nazwisko" value="#{pracownicy.pracownik.nazwisko}" required="true"/>
+                    <h:message for="nazwisko" styleClass="blad" />#{msg.miejscowosc}:
+                    <h:inputText id="miejscowosc" value="#{pracownicy.pracownik.miejscowosc}" required="true"/>
+                    <h:message for="miejscowosc" styleClass="blad" />#{msg.telefon}:
+                    <h:inputText id="telefon" value="#{pracownicy.pracownik.telefon}" required="true"/>
+                    <h:message for="telefon" styleClass="blad" />#{msg.departament}:
+                    <h:selectOneMenu value="#{pracownicy.pracownik.departament}">
+                        <f:selectItems value="#{pracownicy.departamenty}" var="dep" itemLabel="#{dep.nazwa}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="&nbsp;" />#{msg.stanowisko}:
+                    <h:selectOneMenu value="#{pracownicy.pracownik.stanowisko}">
+                        <f:selectItems value="#{pracownicy.stanowiska}" var="stan" itemLabel="#{stan.nazwa}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="&nbsp;" />#{msg.zdjecie}:
+                    <t:inputFileUpload id="zdjecie" validator="#{pracownicy.sprawdzZdjecie}" value="#{pracownicy.zdjecieZal}" storage="file" accept="image/jpeg" />
+                    <h:message for="zdjecie" styleClass="blad" id="errorZdjecie" />
+                    <h:outputText value="#{msg.usun_zdj}:" rendered="#{pracownicy.pracownik.zdjecie}"/>
+                    <h:selectBooleanCheckbox value="#{pracownicy.usunZdjecie}" rendered="#{pracownicy.pracownik.zdjecie}" />
+                    <h:outputText value="&nbsp;" rendered="#{pracownicy.pracownik.zdjecie}" />
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText value="&nbsp;" />
+                    <h:commandButton value="#{msg.anuluj}" immediate="true" action="index" styleClass="cancelBtn inline" />
+                    <h:commandButton value="#{msg.zapisz}" action="#{pracownicy.Edytuj()}" styleClass="okBtn inline" />
+                    <h:outputText value="&nbsp;" />
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

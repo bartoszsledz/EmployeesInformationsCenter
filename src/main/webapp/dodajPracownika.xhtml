@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="./szablon.xhtml">
+        <ui:define name="title">- #{msg.dodawanie_prac}</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <div class="font">
+                    <center><h2>#{msg.dodawanie_prac}</h2></center>
+                </div>
+                <h:panelGrid columns="3">
+                    #{msg.imie}:
+                    <h:inputText id="imie" value="#{pracownicy.pracownik.imie}" required="true"/>
+                    <h:message for="imie" styleClass="blad" />
+                    #{msg.nazwisko}:
+                    <h:inputText id="nazwisko" value="#{pracownicy.pracownik.nazwisko}" required="true"/>
+                    <h:message for="nazwisko" styleClass="blad" />
+                    #{msg.admin_upr}:
+                    <h:selectBooleanCheckbox immediate="true" title="#{msg.admin_tooltip}" styleClass="tooltip" valueChangeListener="#{pracownicy.Sprawdz}" onchange="submit()" />
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText rendered="#{pracownicy.admin}" value="#{msg.login}:"/>
+                    <h:inputText rendered="#{pracownicy.admin}" autocomplete="off" validator="#{pracownicy.sprawdzLogin}"  id="login" value="#{pracownicy.pracownik.login}" >
+                        <f:ajax event="keyup" render="errorLogin" />
+                    </h:inputText>
+                    <h:message for="login" styleClass="blad" id="errorLogin" rendered="#{pracownicy.admin}" />
+                    <h:outputText value="#{msg.haslo}:" rendered="#{pracownicy.admin}"/>
+                    <h:inputSecret rendered="#{pracownicy.admin}" autocomplete="off" id="haslo" value="#{pracownicy.pracownik.haslo}">
+                        <f:validateRegex pattern="^[A-Za-z0-9]\w{5,}$" />
+                    </h:inputSecret>
+                    <h:message for="haslo" styleClass="blad" rendered="#{pracownicy.admin}" />
+                    #{msg.miejscowosc}:<h:inputText id="miejscowosc" value="#{pracownicy.pracownik.miejscowosc}" required="true"/>
+                    <h:message for="miejscowosc" styleClass="blad" />
+                    #{msg.telefon}:<h:inputText id="telefon" value="#{pracownicy.pracownik.telefon}" required="true"/>
+                    <h:message for="telefon" styleClass="blad" />
+                    #{msg.departament}:<h:selectOneMenu value="#{pracownicy.pracownik.departament}">
+                        <f:selectItems value="#{pracownicy.departamenty}" var="dep" itemLabel="#{dep.nazwa}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="&nbsp;" />
+                    #{msg.stanowisko}:<h:selectOneMenu value="#{pracownicy.pracownik.stanowisko}">
+                        <f:selectItems value="#{pracownicy.stanowiska}" var="sta" itemLabel="#{sta.nazwa}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText value="&nbsp;" />
+                    <h:outputText value="&nbsp;" />
+                    <h:commandButton value="#{msg.anuluj}" immediate="true" action="index" styleClass="cancelBtn inline"/>
+                    <h:commandButton value="#{msg.dodaj}" action="#{pracownicy.Dodaj}" styleClass="okBtn inline"/>
+                    <h:outputText value="&nbsp;" />
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

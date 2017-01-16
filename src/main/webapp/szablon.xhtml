@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view locale="#{jezyk.jezyk}">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>#{msg.tytul} <ui:insert name="title" /></title>
+            <h:outputStylesheet name="style.css" library="css" />
+        </h:head>
+        <h:body>
+            <div class="page">
+                <div class="header">
+                    <div class="top">
+                        <h:form>
+                            <h:outputText value="#{msg.jezyk}" />
+                            <h:commandLink actionListener="#{jezyk.zmienJezyk('pl')}" immediate="true">
+                                <h:graphicImage library="images" name="pl.png" alt="#{msg.polski}"></h:graphicImage>
+                            </h:commandLink>
+                            <h:commandLink actionListener="#{jezyk.zmienJezyk('en')}" immediate="true">
+                                <h:graphicImage library="images" name="en.png" alt="#{msg.angielski}"></h:graphicImage>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                    <div class="header_title">#{msg.tytul}</div>
+                    <div class="created"><h2>Created by Bartosz Sledz</h2></div>
+                </div>
+                <div id="menu">
+                    <h:panelGroup layout="block" rendered="#{autoryzacja.zalogowany}">
+                        <h:form>
+                            <ul>
+                                <li><h:commandLink action="#{pracownicy.index}" immediate="true" value="#{msg.pracownicy}"></h:commandLink></li>
+                                <li><h:commandLink action="departamenty" immediate="true" value="#{msg.departamenty}"></h:commandLink></li>
+                                <li><h:commandLink action="stanowiska" immediate="true" value="#{msg.stanowiska}"></h:commandLink></li>
+                                <li><h:commandLink action="#{autoryzacja.wyloguj}" immediate="true" value="#{msg.wyloguj}"></h:commandLink></li>
+                            </ul>
+                        </h:form>
+                    </h:panelGroup>
+                </div>
+                <div id="content">
+                    <ui:insert name="content" />
+                </div>
+            </div>
+        </h:body>
+    </f:view>
+</html>
